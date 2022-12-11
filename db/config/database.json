@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "moody",
+    "password": "23081990",
+    "database": "boomerang",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
