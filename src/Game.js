@@ -7,18 +7,22 @@ const Enemy = require('./game-models/Enemy');
 const Boomerang = require('./game-models/Boomerang');
 const View = require('./View');
 const runInteractiveConsole = require('./keyboard');
+const { Result } = require('../db/models');
 
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
 
 class Game {
-  constructor({ trackLength }) {
+  constructor(trackLength, heroId, heroName, heroScore) {
     this.trackLength = trackLength;
     this.enemy = new Enemy(29, 0);
     this.boomerang = new Boomerang();
     this.hero = new Hero(0, this.enemy.position); // Герою можно аргументом передать бумеранг.
     this.view = new View();
     this.track = [];
+    this.heroId = heroId;
+    this.heroName = heroName;
+    this.heroScore = heroScore;
     this.regenerateTrack();
 
     this.scores = 0;
@@ -29,16 +33,45 @@ class Game {
     // в единую структуру данных()
     // runInteractiveConsole(this.hero);
 
-    this.track = (new Array(this.trackLength)).fill(' ');
+    this.track = new Array(this.trackLength).fill(' ');
     this.track[this.hero.position] = this.hero.skin;
     this.track[this.enemy.position] = this.enemy.skin;
-    if (this.hero.boomerang) this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
+    if (this.hero.boomerang)
+      this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
     if (this.hero.boomerang) this.hero.boomerang.fly();
   }
 
   check() {
     if (this.hero.position === this.enemy.position) {
       this.hero.die();
+
+      const record = async () => {
+        try {
+          await Result.update(
+            { score: this.heroScore },
+            {
+              where: {
+                id: this.heroId,
+              },
+            },
+          );
+          let total = await Result.findAll({
+            attributes: ['player', 'score'],
+          });
+          console.clear();
+          console.log('');
+          console.log('\n');
+          console.log('');
+          total = total.map((el) => el.get()).sort((a, b) => b.score - a.score);
+          total = total.slice(0, 5);
+          console.table(total);
+          console.log('\n');
+          process.exit();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      record();
     }
     if (this.hero.boomerang) {
       if (this.hero.boomerang.position === this.enemy.position) {
