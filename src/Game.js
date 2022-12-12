@@ -11,6 +11,8 @@ const runInteractiveConsole = require('./keyboard');
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
 
+
+
 class Game {
   constructor({ trackLength }) {
     this.trackLength = trackLength;
