@@ -12,6 +12,9 @@ class View {
     const yourTeamName = "Elbrus";
 
     // Тут всё рисуем.
+    if (process.argv[2]) {
+      console.log(`Имя игрока: ${process.argv[2]}`);
+    }
     console.log("\n");
     console.log(args.join(""));
     console.log("\n\n");
