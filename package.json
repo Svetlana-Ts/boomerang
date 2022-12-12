@@ -3,21 +3,23 @@
   "version": "1.0.0",
   "description": "Настало время разрабатывать лучшие в мире игры!",
   "main": "run.js",
+  "scripts": {
+    "dbr": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
+  },
   "dependencies": {
+    "cli": "^1.0.1",
     "find-exec": "^1.0.2",
     "keypress": "^0.2.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "play-sound": "^1.1.5",
-    "sequelize": "^6.21.0"
+    "sequelize": "^6.26.0",
+    "sequelize-cli": "^6.5.2"
   },
   "devDependencies": {
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",

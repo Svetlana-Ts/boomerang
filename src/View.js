@@ -9,12 +9,15 @@ class View {
   }
 
   render(args, scores) {
-    const yourTeamName = 'Elbrus';
+    const yourTeamName = "Elbrus";
 
     // Тут всё рисуем.
-    console.log('\n');
-    console.log(args.join(''));
-    console.log('\n\n');
+    if (process.argv[2]) {
+      console.log(`Имя игрока: ${process.argv[2]}`);
+    }
+    console.log("\n");
+    console.log(args.join(""));
+    console.log("\n\n");
     console.log(`Your scores: ${scores}`);
     console.log(`Created by "${yourTeamName}" with love`);
   }
